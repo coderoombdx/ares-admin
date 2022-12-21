@@ -4,8 +4,8 @@ import type { GameDescription, GameStateInfo } from "@/models/GameState";
 import { UnsetGameState, ValidGameState } from "@/models/GameState";
 
 
-const game: Writable<GameStateInfo> = writable(new UnsetGameState());
+const gameState: Writable<GameStateInfo> = writable(new UnsetGameState());
 
-const setGame = (gameDescription: GameDescription) => game.set(new ValidGameState(gameDescription));
+const setGame = (gameDescription: GameDescription) => gameState.set(new ValidGameState(gameDescription));
 
-export { game, setGame };
+export { gameState, setGame };

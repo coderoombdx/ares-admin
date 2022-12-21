@@ -1,27 +1,35 @@
 <script>
-	import { GameStateRequests } from "../api/GameStateRequests.ts";
-	import { game, setGame } from "../store/GameState.ts";
+    import { GameStateRequests } from "../api/GameStateRequests.ts";
+    import { gameState, setGame } from "../store/GameState.ts";
+    import { ValidGameState } from "@/models/GameState.ts";
+    import PostMessage from "@/components/PostMessage.svelte";
+    import Timer from "@/components/Timer.svelte";
 
 
-	game.subscribe(g => console.log("STORE VALUE ", g));
-	GameStateRequests.getGameState().then(gameDescription => setGame(gameDescription));
+    const interval = setInterval(() =>
+        GameStateRequests.getGameState().then(gameDescription => setGame(gameDescription)), 1000);
+
 </script>
 
 <svelte:head>
-	<title>Ares Game Administrator</title>
-	<meta name="description" content="Ares administrator app" />
+    <title>Ares Game Administrator</title>
+    <meta name="description" content="Ares administrator app" />
 </svelte:head>
 
 <section>
+    {#if $gameState instanceof ValidGameState}
+        <Timer time={ $gameState.compteARebours } />
+    {/if}
 
+    <PostMessage />
 </section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 0.6;
+    }
 </style>
