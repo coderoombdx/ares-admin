@@ -1,11 +1,12 @@
 <script>
     import {MessageRequest} from "@/api/MessageRequest.ts";
+    import {addMessage, messages} from "@/store/GameState.ts";
 
     let value = "";
-    let messagesList = []
     const postMessage = () => {
+        console.log("ici ", value)
         MessageRequest.postMessage(value).then(() => {
-            messagesList.push(value)
+            addMessage(value)
             value = "";
         })
     }
@@ -13,7 +14,10 @@
 
 <div>
     <textarea placeholder="taper votre message..." bind:value={value}></textarea>
-    <button on:click={postMessage} disabled={value === ""} >Envoyer</button>
+    <button on:click={postMessage} >Envoyer</button>
+    {#each $messages as message}
+        <p>{message}</p>
+    {/each}
 </div>
 
 <style>
