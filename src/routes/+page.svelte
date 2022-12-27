@@ -24,7 +24,7 @@
 
     <PostMessage/>
 
-    <div class="mt-5 bg-black">
+    <div class="mt-3">
         <AddTime/>
     </div>
 </section>
