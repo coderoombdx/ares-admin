@@ -1,8 +1,9 @@
 <script>
-    import { GameStateRequests } from "../api/GameStateRequests.ts";
-    import { gameState, setGame } from "../store/GameState.ts";
-    import { ValidGameState } from "@/models/GameState.ts";
+    import {GameStateRequests} from "../api/GameStateRequests.ts";
+    import {gameState, setGame} from "../store/GameState.ts";
+    import {ValidGameState} from "@/models/GameState.ts";
     import PostMessage from "@/components/PostMessage.svelte";
+    import AddTime from "@/components/AddTime.svelte";
     import Timer from "@/components/Timer.svelte";
 
 
@@ -13,15 +14,19 @@
 
 <svelte:head>
     <title>Ares Game Administrator</title>
-    <meta name="description" content="Ares administrator app" />
+    <meta name="description" content="Ares administrator app"/>
 </svelte:head>
 
 <section>
     {#if $gameState instanceof ValidGameState}
-        <Timer time={ $gameState.compteARebours } />
+        <Timer time={ $gameState.compteARebours }/>
     {/if}
 
-    <PostMessage />
+    <PostMessage/>
+
+    <div class="mt-5 bg-black">
+        <AddTime/>
+    </div>
 </section>
 
 <style>
