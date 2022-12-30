@@ -1,11 +1,10 @@
 <script>
-    import {GameStateRequests} from "../api/GameStateRequests.ts";
-    import {gameState, setGame} from "../store/GameState.ts";
+    import {GameStateRequests} from "@/api/GameStateRequests.ts";
+    import {gameState, setGame} from "@/store/GameState.ts";
     import {ValidGameState} from "@/models/GameState.ts";
     import PostMessage from "@/components/PostMessage.svelte";
-    import AddTime from "@/components/AddTime.svelte";
     import Timer from "@/components/Timer.svelte";
-
+    import AllStates from "@/components/AllStates.svelte";
 
     const interval = setInterval(() =>
         GameStateRequests.getGameState().then(gameDescription => setGame(gameDescription)), 1000);
@@ -17,17 +16,25 @@
     <meta name="description" content="Ares administrator app"/>
 </svelte:head>
 
-<section>
+<div>
     {#if $gameState instanceof ValidGameState}
-        <Timer time={ $gameState.compteARebours }/>
+        <div class="mt-3">
+            <Timer time={ $gameState.compteARebours }/>
+        </div>
+
+        <div class="d-flex flex-row mt-3">
+            <div class="">
+                <PostMessage/>
+            </div>
+
+            <div class="">
+                <AllStates
+                        electricite-generale={$gameState.electriciteGenerale}
+                />
+            </div>
+        </div>
     {/if}
-
-    <PostMessage/>
-
-    <div class="mt-3">
-        <AddTime/>
-    </div>
-</section>
+</div>
 
 <style>
     section {

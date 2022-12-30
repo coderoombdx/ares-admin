@@ -18,8 +18,9 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+		background-image: radial-gradient(#215769 2px, transparent 2px);
+		background-size: 11px 11px;
 	}
-
 	main {
 		flex: 1;
 		display: flex;
