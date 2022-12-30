@@ -1,5 +1,8 @@
 <script>
-    export let electriciteGenerale = "OFF"
+    import {EtatPorte} from "@/models/GameState.ts";
+
+    export let porte1 = EtatPorte.FERMEE
+    export let title = ""
 </script>
 
 <div>
@@ -29,8 +32,9 @@
                     <stop offset="1" stop-color="#2B3B64" stop-opacity="0"/>
                 </radialGradient>
             </defs>
-            <foreignObject height="300" width="200" x="30" y="20">
-                <p>Electricite générale : {electriciteGenerale} </p>
+            <foreignObject height="300" width="200" x="35" y="20">
+                <h2>{title}</h2>
+                <p>Porte 1 : {porte1} </p>
             </foreignObject>
         </svg>
 
@@ -51,6 +55,10 @@
     p {
         color: #9b9b9b;
         font-size: 12px;
+    }
+    h2 {
+        color: #9b9b9b;
+        font-size: 18px;
     }
 
 </style>
