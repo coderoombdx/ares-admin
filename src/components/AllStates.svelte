@@ -47,7 +47,6 @@
     }
 
     .container {
-        width: 453px;
         position: relative;
 
     }

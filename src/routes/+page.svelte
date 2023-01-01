@@ -4,6 +4,7 @@
     import {ValidGameState} from "@/models/GameState.ts";
     import PostMessage from "@/components/PostMessage.svelte";
     import Timer from "@/components/Timer.svelte";
+    import Alarm from "@/components/Alarm.svelte";
     import AllStates from "@/components/AllStates.svelte";
     import Electricity from "@/components/Electricity.svelte";
 
@@ -17,42 +18,53 @@
     <meta name="description" content="Ares administrator app"/>
 </svelte:head>
 
-<div>
+<div class="container">
     {#if $gameState instanceof ValidGameState}
         <div class="electricity">
             <Electricity/>
         </div>
 
         <div class="mt-5 d-flex flex-row">
-            <Timer time={ $gameState.compteARebours }/>
-            <PostMessage/>
+            <div class="mr-5">
+                <div class="d-flex flex-row w-100 justify-content-end">
+                    <Alarm time={ $gameState.derniereAlarme }/>
+                </div>
+                <Timer time={ $gameState.compteARebours }/>
+            </div>
+            <div class="px-5">
+                <PostMessage/>
+                <div class="d-flex flex-row mt-5">
+                    <AllStates
+                            title="Scenario 1"
+                            porte1={$gameState.scenario1.porte1}
+                    />
+                    <AllStates
+                            title="Scenario 2"
+                            porte1={$gameState.scenario2.porte1}
+                    />
+                </div>
+            </div>
         </div>
 
-        <div class="mt-5 d-flex flex-row">
-            <AllStates
-                    title="Scenario 1"
-                    porte1={$gameState.scenario1.porte1}
-            />
-            <AllStates
-                    title="Scenario 2"
-                    porte1={$gameState.scenario2.porte1}
-            />
-        </div>
+
     {/if}
 </div>
 
 <style>
-    section {
+    .wrapper {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 0.6;
+        flex-direction: row;
     }
 
-    .electricity {
-        position: absolute;
-        top: 10px;
-        left: 20px
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wrapper-states {
+        display: flex;
+        flex-direction: row;
     }
 </style>
