@@ -40,7 +40,7 @@
         <div  class="messages-wrapper">
             <div  class="messages-container">
             {#each $messages as message}
-                <p class="mb-1">{message}</p>
+                <p class="mb-1">{message.getMessageDate()} - {message.message}</p>
             {/each}
             </div>
         </div>
