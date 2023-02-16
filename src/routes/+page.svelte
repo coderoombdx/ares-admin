@@ -7,9 +7,17 @@
     import Alarm from "@/components/Alarm.svelte";
     import AllStates from "@/components/AllStates.svelte";
     import Electricity from "@/components/Electricity.svelte";
+    import LaunchDrone from "@/components/LaunchDrone.svelte";
+    import {onMount} from "svelte";
+    import {DoorsRequests} from "@/api/DoorsRequests.ts";
+    import {setDoors, doors} from "@/store/Doors.ts";
 
     const interval = setInterval(() =>
         GameStateRequests.getGameState().then(gameDescription => setGame(gameDescription)), 1000);
+
+    onMount(() => {
+        DoorsRequests.getDoors().then(doors => setDoors(doors) )
+    })
 
 </script>
 
@@ -20,7 +28,10 @@
 
 <div class="container">
     {#if $gameState instanceof ValidGameState}
-        <div class="electricity">
+        <div class="d-flex align-items-center">
+            <div class="mx-5">
+                <LaunchDrone/>
+            </div>
             <Electricity/>
         </div>
 
@@ -51,20 +62,11 @@
 </div>
 
 <style>
-    .wrapper {
-        display: flex;
-        flex-direction: row;
-    }
 
     .container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-    }
-
-    .wrapper-states {
-        display: flex;
-        flex-direction: row;
     }
 </style>

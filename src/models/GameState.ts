@@ -25,15 +25,6 @@ export class UnsetGameState implements GameStateInfo {
 
 }
 
-export class InvalidGameState implements GameStateInfo {
-
-}
-
-export class LoadingGameState implements GameStateInfo {
-
-}
-
-
 export class ValidGameState implements GameStateInfo {
     compteARebours = 0;
     timestampFinDuJeu = 0;
