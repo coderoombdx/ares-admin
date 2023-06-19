@@ -1,38 +1,35 @@
-# create-svelte
+# PROJET ARES
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Vous êtes sur le projet de la page administrateur de l'Escape Game "Projet Ares". Destiné au maître de jeu, 
+cette interface permettre de communiquer avec le joueur , de lui envoyer des messages, et des débloquer
+des énigmes en cas de problèmes techniqued
 
-## Creating a project
+## Initialisation
 
-If you're seeing this, you've probably already done this step. Congrats!
+Ce projet nécessite de tourner avec le backend associé ares-rasp, qui va envoyer toutes les données 
+au maître de jeu. Le backend est appelé toutes les secondes pour mettre à jour l'état du jeu.
+
+A la récupération du projet : 
 
 ```bash
 # create a new project in the current directory
-npm create svelte@latest
+npm install
 
 # create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
+
+## Développement
+
+Les éléments d'interface ont principalement été écrits en svg pour donner un aspet au maximum "jeu video SF".
+
 
 ## Building
 
-To create a production version of your app:
+Pour le déploiement, lancez la commande suivante :
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Ensuite, récupérez le contenu du dossier build, et mettez la dans le dossier www/etc/ares-admin du raspberry
