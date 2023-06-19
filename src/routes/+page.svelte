@@ -6,7 +6,7 @@
     import Timer from "@/components/Timer.svelte";
     import Alarm from "@/components/Alarm.svelte";
     import AllStates from "@/components/AllStates.svelte";
-    import Electricity from "@/components/Electricity.svelte";
+    import LaunchDrone from "@/components/LaunchDrone.svelte";
 
     const interval = setInterval(() =>
         GameStateRequests.getGameState().then(gameDescription => setGame(gameDescription)), 1000);
@@ -18,53 +18,45 @@
     <meta name="description" content="Ares administrator app"/>
 </svelte:head>
 
-<div class="container">
+<div class="">
     {#if $gameState instanceof ValidGameState}
-        <div class="electricity">
-            <Electricity/>
-        </div>
 
-        <div class="mt-5 d-flex flex-row">
-            <div class="mr-5">
-                <div class="d-flex flex-row w-100 justify-content-end">
-                    <Alarm time={ $gameState.derniereAlarme }/>
-                </div>
+        <div class="d-flex flex-row  align-content-stretch w-100 pt-3 ">
+            <div class="mx-2 px-5 py-5 bg-white bg-opacity-50  justify-content-center align-items-center d-flex">
+                <LaunchDrone/>
+            </div>
+            <div class="mx-2 px-5 py-5 bg-white bg-opacity-50">
                 <Timer time={ $gameState.compteARebours }/>
             </div>
-            <div class="px-5">
+            <div class="mx-2 px-5 py-5 bg-white bg-opacity-50  justify-content-center align-items-center d-flex">
                 <PostMessage/>
-                <div class="d-flex flex-row mt-5">
-                    <AllStates
-                            title="Scenario 1"
-                            porte1={$gameState.scenario1.porte1}
-                    />
-                    <AllStates
-                            title="Scenario 2"
-                            porte1={$gameState.scenario2.porte1}
-                    />
-                </div>
+            </div>
+            <div class="mx-2 px-5 py-5 bg-white bg-opacity-50  justify-content-center align-items-center d-flex">
+                <Alarm time={ $gameState.derniereAlarme }/>
             </div>
         </div>
-
-
+        <div>
+            <div class="d-flex flex-row">
+                {#each Object.entries($gameState.scenarios) as scenario, index}
+                    <div class="d-flex flex-column bg-white bg-opacity-50  justify-content-center align-items-center my-5 mx-2 w-100"
+                         key={index}>
+                        <p class="text-white pt-2">Scénario {index}</p>
+                        <div class=" d-flex flex-row px-5 py25 " key={index}>
+                            {#each scenario[1] as module, index}
+                                <div key="{index}" class="my-2">
+                                    <AllStates
+                                            module="{module}"
+                                            id={module.id}
+                                            title={module.description}
+                                            enigmes={module.enigmes}
+                                            state={module.etat}
+                                    />
+                                </div>
+                            {/each}
+                        </div>
+                    </div>
+                {/each}
+            </div>
+        </div>
     {/if}
 </div>
-
-<style>
-    .wrapper {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .wrapper-states {
-        display: flex;
-        flex-direction: row;
-    }
-</style>

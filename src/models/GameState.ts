@@ -1,21 +1,10 @@
-
-export enum EtatPorte {
-    FERMEE = "FERMEE",
-    OUVERT = "OUVERT"
-}
-
-export interface Scenario {
-    porte1: EtatPorte
-}
-
 export interface GameDescription {
     compteARebours: number,
     timestampFinDuJeu: number,
     messageAide: string,
     electriciteGenerale: "ON" | "OFF",
     derniereAlarme: number,
-    scenario1: Scenario,
-    scenario2: Scenario
+    modules: Array<Module>,
 }
 
 export interface GameStateInfo {
@@ -25,14 +14,26 @@ export class UnsetGameState implements GameStateInfo {
 
 }
 
-export class InvalidGameState implements GameStateInfo {
-
+export interface Enigme {
+    "id": string,
+    "description": string,
+    "resolu": boolean,
+    "code": null | string
 }
 
-export class LoadingGameState implements GameStateInfo {
-
+export enum Etat {
+    ADEBUTER = "ADEBUTER",
+    ENCOURS = "ENCOURS",
+    TERMINE = "TERMINE",
 }
 
+export interface Module {
+    "id": string,
+    "idScenario": string,
+    "description": string,
+    "etat": Etat,
+    "enigmes": Array<Enigme>
+}
 
 export class ValidGameState implements GameStateInfo {
     compteARebours = 0;
@@ -40,8 +41,8 @@ export class ValidGameState implements GameStateInfo {
     messageAide = "";
     electriciteGenerale = "OFF";
     derniereAlarme = 0;
-    scenario1: Scenario | null = null;
-    scenario2: Scenario | null = null;
+    scenarios = {} as any
+    modules = [] as Array<Module>
 
     constructor(game: GameDescription) {
         this.compteARebours = game.compteARebours;
@@ -49,7 +50,11 @@ export class ValidGameState implements GameStateInfo {
         this.messageAide = game.messageAide;
         this.electriciteGenerale = game.electriciteGenerale;
         this.derniereAlarme = game.compteARebours;
-        this.scenario1 = game.scenario1;
-        this.scenario2 = game.scenario2;
+        this.modules = game.modules;
+        this.scenarios = this.modules.reduce(function (rv, x) {
+            // @ts-ignore
+            (rv[x.idScenario] = rv[x.idScenario] || []).push(x);
+            return rv;
+        }, {})
     }
 }
